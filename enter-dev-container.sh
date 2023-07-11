@@ -8,7 +8,7 @@ if [ $? -eq 0 ]; then
         # Mac
         sys_mount_arg=""
     fi
-    docker run -v $PWD:/work -w /work $sys_mount_arg -it --rm --privileged --net=host --pid=host --security-opt seccomp=unconfined ebpfgo-env bash
+    docker run -v $PWD:/work -w /work $sys_mount_arg -it --rm --privileged --net=host --pid=host --security-opt seccomp=unconfined ebpf-env bash
 else
     echo "Build failed"
 fi
