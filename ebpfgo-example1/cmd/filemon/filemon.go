@@ -3,9 +3,12 @@ package main
 import (
 	fileaccessmonitor "ebpfgo-example1/core/file-access-monitor"
 	"fmt"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/cilium/ebpf/rlimit"
 )
 
 type CommandFileActivityMonitorClient struct {
@@ -21,6 +24,10 @@ func (client *CommandFileActivityMonitorClient) Notify(event fileaccessmonitor.F
 }
 
 func main() {
+	if err := rlimit.RemoveMemlock(); err != nil {
+		log.Fatal(err)
+	}
+
 	// Create client
 	client := CommandFileActivityMonitorClient{}
 
