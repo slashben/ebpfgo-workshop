@@ -2,7 +2,7 @@
 #include <vmlinux.h>
 #include <linux/limits.h> 
 #include <bpf_helpers.h>
-#include <bpf_core_read.h>
+//#include <bpf_core_read.h>
 #include "bpf_tracing.h"
 
 char __license[] SEC("license") = "Dual MIT/GPL";
@@ -36,11 +36,11 @@ struct syscalls_enter_execve_args
 };
 
 void add_common_event_info(struct event *task_info) {
-	struct task_struct *task;	
-	task = (struct task_struct*) bpf_get_current_task();
+	//struct task_struct *task;	
+	//task = (struct task_struct*) bpf_get_current_task();
 
 	task_info->timestamp = bpf_ktime_get_ns();
-	task_info->mntns_id = (u64) BPF_CORE_READ(task, nsproxy, mnt_ns, ns.inum);
+	//task_info->mntns_id = (u64) BPF_CORE_READ(task, nsproxy, mnt_ns, ns.inum);
 	task_info->pid = bpf_get_current_pid_tgid() >> 32;
 	task_info->ppid = 0; 
 	bpf_get_current_comm(&task_info->comm, 16);
